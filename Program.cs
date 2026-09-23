@@ -1,4 +1,5 @@
-﻿using POO;
+﻿using Actividad_Clases.Clases;
+using POO;
 using POO.Repositorios;
 //Hicimos un menu para que el usuario pueda elegir entre empleados y productos, y luego elegir entre registrar, actualizar o eliminar.
 Console.WriteLine("Menu:");
@@ -135,6 +136,21 @@ switch (o)
     default:
         Console.WriteLine("Opcion no valida");
         break;
+
+
+        //DateTime nacimiento = Convert.ToDateTime("1990-05-15");
+        //Persona persona = new Persona("Juan", "Perez", "Gomez", nacimiento);
+
+        //cuando se asigna un objeto a otro, se crea una referencia al mismo objeto en memoria
+        //Persona persona2 = new Persona("Maria", "Lopez", "Martinez", Convert.ToDateTime("1995-08-20"));
+
+        //Mostrar en pantalla los datos de la persona asignados
+        //Console.WriteLine($"{persona.Nombre} {persona.ApellidoP} {persona.ApellidoM} tiene la edad de: {persona.Edad} años");
+
+        //Console.WriteLine($"{persona2.Nombre} {persona2.ApellidoP} {persona2.ApellidoM} tiene la edad de: {persona2.Edad} años");
+
+
+
 }
 
 
