@@ -1,4 +1,5 @@
 ﻿using Actividad_Clases.Clases;
+using Org.BouncyCastle.Bcpg.OpenPgp;
 using POO;
 using POO.Repositorios;
 //Hicimos un menu para que el usuario pueda elegir entre empleados y productos, y luego elegir entre registrar, actualizar o eliminar.
@@ -266,6 +267,69 @@ while (!salir)
 
             List<Producto> listaproductos =
                 repoproductos.Lista();
+
+        case "3":
+            Console.WriteLine("\n===== TIENDA =====");
+            Console.WriteLine("V. Vender");
+            Console.WriteLine("H. Historial");
+            string mt = Console.ReadLine();
+
+            
+
+            
+            switch (mt)
+            {
+
+                case "V":
+                    string p = "P";
+                    Venta venta = new Venta();
+                    venta.CodigoVenta = DateTime.Now.ToString("yyyyMMddss");
+                    venta.Fecha = DateTime.Now;
+                    venta.Empleado = usuario;
+                    while (p == "P")
+                    {
+                        Producto infoProduct = repoproductos.GetById(codigoProducto);
+
+
+                        venta.AgregarProducto(infoProduct, cantidad);
+
+
+                        //agregar productos a la venta
+                        Console.WriteLine("Ingrese codigo de producto:");
+                        int codigoProducto = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Ingrese cantidad de productos:");
+                        int cantidad = Convert.ToInt32(Console.ReadLine());
+                        VentaProductos ProductoVendido = new VentaProductos();
+                        venta.Productos.Add();
+                        Console.WriteLine("Desea agregar otro producto o cobrar?");
+                        Console.WriteLine("P. Agregar otro producto");
+                        Console.WriteLine("C. Cobrar");
+                        p = Console.ReadLine().ToUpper();
+                        Console.Clear();
+
+
+                      
+                    }
+                    Console.WriteLine("Cobrando...");
+                    Console.WriteLine("producto------cantidad-------total");
+                    foreach(Producto prod in venta.Productos)
+                    {
+                        Console.WriteLine($" {prod.producto.Nombre}        {prod.producto.Precio}   {prod.cantidad}")          {prod.total}");
+                    }
+                    Console.WriteLine($"Total: {venta.Total}");
+
+                    //mostrar en pantalla detalles de la venta
+                    /* producto------precio unitario------cantidad-------total
+                     * Manzanas          23.00               2            46.00
+                     * Queso            100.00               1           100.00
+                     * Total---------------------------------------------146.00
+                     */
+
+
+                    break;
+            }
+
+            break;
 
             switch (m)
             {

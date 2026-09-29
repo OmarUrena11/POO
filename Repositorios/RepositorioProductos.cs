@@ -167,6 +167,31 @@ namespace POO.Repositorios
                 conection.Close();
             }
             return lista;
+
+            public Producto Buscar(int id)
+        {
+            //Buscar un producto en la base de datos por su ID
+            MySqlConnection conection = new MySqlConnection(connStr);
+            MySqlCommand command = new MySqlCommand("select * from productos where ID=@ID", conection);
+            command.Parameters.AddWithValue("@ID", id);
+            Producto producto = null;
+            try
+            {
+                conection.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        producto = new Producto();
+                        producto.ID = Convert.ToInt32(reader["id"].ToString());
+                        producto.Nombre = reader["nombre"].ToString();
+                        producto.Precio = Convert.ToDecimal(reader["precio"].ToString());
+                    }
+                }
+                reader.Close();
+            }
+            return producto;
         }
     }
 }
