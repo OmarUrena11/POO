@@ -129,68 +129,109 @@ namespace POO.Repositorios
         }
         public List<Producto> Buscar(string nombre)
         {
-            //Buscar los productos en la base de datos
+            // Buscar productos por nombre
             MySqlConnection conection = new MySqlConnection(connStr);
-            MySqlCommand command = new MySqlCommand("select * from productos where nombre LIKE '%'@nombre'%'", conection);
-            command.Parameters.AddWithValue("@nombre", $"%{nombre}%");
+
+            MySqlCommand command = new MySqlCommand(
+                "SELECT * FROM productos WHERE nombre LIKE @nombre",
+                conection);
+
+            command.Parameters.AddWithValue("@nombre", "%" + nombre + "%");
+
             List<Producto> lista = new List<Producto>();
 
             try
             {
                 conection.Open();
+
                 MySqlDataReader reader = command.ExecuteReader();
+
                 if (reader.HasRows)
                 {
                     while (reader.Read())
                     {
                         Producto producto = new Producto();
-                        producto.ID = Convert.ToInt32(reader["id"].ToString());
-                        producto.Nombre = reader["nombre"].ToString();
-                        producto.Precio = Convert.ToDecimal(reader["precio"].ToString());
+
+                        producto.ID =
+                            Convert.ToInt32(reader["id"].ToString());
+
+                        producto.Nombre =
+                            reader["nombre"].ToString();
+
+                        producto.Precio =
+                            Convert.ToDecimal(reader["precio"].ToString());
 
                         lista.Add(producto);
-
                     }
                 }
+
                 reader.Close();
-
-
-
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error al listar productos");
+                Console.WriteLine("Error al buscar productos");
                 Console.WriteLine(ex.ToString());
             }
             finally
             {
                 conection.Close();
             }
-            return lista;
 
-            public Producto Buscar(int id)
+            return lista;
+        }
+
+
+        // Buscar producto por ID
+        public Producto Buscar(int id)
         {
-            //Buscar un producto en la base de datos por su ID
-            MySqlConnection conection = new MySqlConnection(connStr);
-            MySqlCommand command = new MySqlCommand("select * from productos where ID=@ID", conection);
+            MySqlConnection conection =
+                new MySqlConnection(connStr);
+
+            MySqlCommand command =
+                new MySqlCommand(
+                    "SELECT * FROM productos WHERE ID=@ID",
+                    conection);
+
             command.Parameters.AddWithValue("@ID", id);
+
             Producto producto = null;
+
             try
             {
                 conection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
+
+                MySqlDataReader reader =
+                    command.ExecuteReader();
+
                 if (reader.HasRows)
                 {
-                    while (reader.Read())
+                    if (reader.Read())
                     {
                         producto = new Producto();
-                        producto.ID = Convert.ToInt32(reader["id"].ToString());
-                        producto.Nombre = reader["nombre"].ToString();
-                        producto.Precio = Convert.ToDecimal(reader["precio"].ToString());
+
+                        producto.ID =
+                            Convert.ToInt32(reader["id"].ToString());
+
+                        producto.Nombre =
+                            reader["nombre"].ToString();
+
+                        producto.Precio =
+                            Convert.ToDecimal(reader["precio"].ToString());
                     }
                 }
+
                 reader.Close();
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al buscar producto");
+                Console.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                conection.Close();
+            }
+
             return producto;
         }
     }
