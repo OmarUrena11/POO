@@ -19,6 +19,7 @@ string[] codigosValidos =
 };
 
 bool acceso = false;
+int idEmpleadoSesion = 0;
 
 while (!acceso)
 {
@@ -520,8 +521,6 @@ while (!salir)
 
                     case "V":
                         {
-                            
-
                             RepositorioProductos repoproductos =
                                 new RepositorioProductos();
 
@@ -530,15 +529,14 @@ while (!salir)
                             Venta venta =
                                 new Venta();
 
+                            // Generar automáticamente el código de venta
                             venta.CodigoVenta =
-                                DateTime.Now.ToString(
-                                    "yyyyMMddHHmmss");
+                                DateTime.Now.ToString("yyyyMMddHHmmss");
 
+                            // Guardar fecha y hora
                             venta.Fecha =
                                 DateTime.Now;
 
-
-                       
 
                             while (p == "P")
                             {
@@ -556,7 +554,6 @@ while (!salir)
                                     Convert.ToInt32(
                                         Console.ReadLine());
 
-
                                 Console.Write(
                                     "Ingrese cantidad: ");
 
@@ -565,8 +562,7 @@ while (!salir)
                                         Console.ReadLine());
 
 
-                                //Buscar producto por ID en la base de datos
-
+                                // Buscar producto
                                 Producto infoProduct =
                                     repoproductos.Buscar(
                                         codigoProducto);
@@ -586,8 +582,7 @@ while (!salir)
                                 }
 
 
-                                
-
+                                // Agregar producto a la venta
                                 venta.AgregarProducto(
                                     infoProduct,
                                     cantidad);
@@ -597,8 +592,6 @@ while (!salir)
 
                                 Console.WriteLine(
                                     "Producto agregado correctamente.");
-
-                                Console.WriteLine();
 
                                 Console.WriteLine(
                                     $"Producto: {infoProduct.Nombre}");
@@ -629,7 +622,6 @@ while (!salir)
                             }
 
 
-                          
 
                             Console.Clear();
 
@@ -643,14 +635,13 @@ while (!salir)
                                 "==========================================");
 
                             Console.WriteLine(
-                                $"Venta: {venta.CodigoVenta}");
+                                $"Código de venta: {venta.CodigoVenta}");
 
                             Console.WriteLine(
                                 $"Fecha: {venta.Fecha}");
 
                             Console.WriteLine(
                                 "------------------------------------------");
-
 
                             Console.WriteLine(
                                 "{0,-18} {1,8} {2,6} {3,10}",
@@ -659,12 +650,9 @@ while (!salir)
                                 "Cant.",
                                 "Total");
 
-
                             Console.WriteLine(
                                 "------------------------------------------");
 
-
-                     
 
                             foreach (
                                 VentaProductos vendido
@@ -682,10 +670,8 @@ while (!salir)
                             Console.WriteLine(
                                 "------------------------------------------");
 
-
                             Console.WriteLine(
                                 $"TOTAL: ${venta.Total:F2}");
-
 
                             Console.WriteLine(
                                 "==========================================");
