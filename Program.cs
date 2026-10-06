@@ -1,6 +1,10 @@
 ﻿using Actividad_Clases.Clases;
-using POO;
-using POO.Repositorios;
+using Core.Repositorios;
+using Core;
+
+
+
+
 bool acceso = false;
 Empleado Usuario = null;
 
@@ -72,6 +76,7 @@ while (!salir)
                 Console.Clear();
 
                 Console.WriteLine("\n===== EMPLEADOS =====");
+
                 Empleado empleado = new Empleado();
 
                 empleado.Nombre = "";
@@ -358,12 +363,19 @@ while (!salir)
                     case "V":
                         {
                             RepositorioProductos repoproductos = new RepositorioProductos();
+
+                            RepositorioVentas repositorioVentas = new RepositorioVentas();
+
+                            int numeroVenta = repositorioVentas.ObtenerNumeroVentaDelDia();
+
+                            string codigoVenta = DateTime.Now.ToString("yyyyMMdd") + numeroVenta.ToString("D3");
+
                             string p = "P";
-                            Venta venta = new Venta(Usuario);
+
+                            Venta venta = new Venta(Usuario, codigoVenta);
 
                             while (p == "P")
                             {
-
                                 Console.Clear();
 
                                 Console.WriteLine("===== AGREGAR PRODUCTO =====");
@@ -406,7 +418,6 @@ while (!salir)
 
                                 p = Console.ReadLine().ToUpper();
                             }
-                            RepositorioVentas repositorioVentas = new RepositorioVentas();
 
                             repositorioVentas.Registrar(venta);
 
@@ -450,6 +461,8 @@ while (!salir)
 
                             break;
                         }
+
+                    // Historial de ventas
                     case "H":
                         {
                             Console.Clear();
@@ -458,8 +471,7 @@ while (!salir)
                             Console.WriteLine("           HISTORIAL DE VENTAS");
                             Console.WriteLine("==========================================");
 
-                            RepositorioVentas repositorioVentas =
-                                new RepositorioVentas();
+                            RepositorioVentas repositorioVentas = new RepositorioVentas();
 
                             List<Venta> ventas = repositorioVentas.Lista();
 
@@ -513,8 +525,6 @@ while (!salir)
     Console.WriteLine("Presiona ENTER para regresar al menú...");
     Console.ReadLine();
 }
-
-
 
 
 

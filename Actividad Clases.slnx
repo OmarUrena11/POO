@@ -1,3 +1,5 @@
 <Solution>
+  <Project Path="../Core/Core.csproj" Id="8111000d-6928-4d24-a8ba-1524d5feea79" />
+  <Project Path="../TiendaWinforms/TiendaWinforms.csproj" Id="89dadaa5-4535-44f8-a5dd-478794949512" />
   <Project Path="POO.csproj" />
 </Solution>
