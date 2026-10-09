@@ -1,9 +1,9 @@
 ﻿using Actividad_Clases.Clases;
-using Core.Repositorios;
 using Core;
-
-
-
+using Core.Clases;
+using Core.Repositorios;
+using System;
+using System.Collections.Generic;
 
 bool acceso = false;
 Empleado Usuario = null;
@@ -62,15 +62,13 @@ while (!salir)
     if (o == "0")
     {
         salir = true;
-
         Console.WriteLine("\nSaliendo del programa...");
-
         break;
     }
 
     switch (o)
     {
-        // Case 1 Empleados
+        // Empleados
         case "1":
             {
                 Console.Clear();
@@ -84,7 +82,8 @@ while (!salir)
                 empleado.Salario = 0;
                 empleado.ID = 0;
 
-                List<Empleado> listaempleados = repoempleados.Lista();
+                List<Empleado> listaempleados =
+                    repoempleados.Lista().Data ?? new List<Empleado>();
 
                 Console.WriteLine("\n¿Qué movimiento desea realizar?");
                 Console.WriteLine("R. Registrar");
@@ -140,18 +139,18 @@ while (!salir)
                     case "E":
 
                         Console.WriteLine("\n===== ELIMINAR EMPLEADO =====");
-
                         Console.WriteLine("ID   |   Nombre   |   Edad   | Salario");
                         Console.WriteLine("-----------------------------------------");
 
                         foreach (Empleado emp in listaempleados)
                         {
-                            Console.WriteLine($"{emp.ID} | {emp.Nombre} | {emp.Edad} | ${emp.Salario:F2}");
+                            Console.WriteLine(
+                                $"{emp.ID} | {emp.Nombre} | {emp.Edad} | ${emp.Salario:F2}");
                         }
 
                         Console.WriteLine();
-
                         Console.WriteLine("Ingrese el ID del empleado a eliminar:");
+
                         empleado.ID = Convert.ToInt32(Console.ReadLine());
 
                         repoempleados.Eliminar(empleado);
@@ -163,7 +162,6 @@ while (!salir)
 
                         Console.WriteLine("\n===== LISTA DE EMPLEADOS =====");
                         Console.WriteLine();
-
                         Console.WriteLine("ID   |   Nombre   |   Edad   | Salario");
                         Console.WriteLine("-----------------------------------------");
 
@@ -171,7 +169,8 @@ while (!salir)
                         {
                             Empleado emp = listaempleados[i];
 
-                            Console.WriteLine($"{emp.ID} | {emp.Nombre} | {emp.Edad} | ${emp.Salario:F2}");
+                            Console.WriteLine(
+                                $"{emp.ID} | {emp.Nombre} | {emp.Edad} | ${emp.Salario:F2}");
                         }
 
                         break;
@@ -180,21 +179,22 @@ while (!salir)
                     case "B":
 
                         Console.WriteLine("\n===== BUSCAR EMPLEADO =====");
-
                         Console.WriteLine("Ingrese el nombre del empleado a buscar:");
 
                         string nombreEmpleado = Console.ReadLine();
 
-                        List<Empleado> empleadosEncontrados = repoempleados.Buscar(nombreEmpleado);
+                        List<Empleado> empleadosEncontrados =
+                            repoempleados.Buscar(nombreEmpleado).Data
+                            ?? new List<Empleado>();
 
                         Console.WriteLine();
-
                         Console.WriteLine("ID   |   Nombre   |   Edad   | Salario");
                         Console.WriteLine("-----------------------------------------");
 
                         foreach (Empleado emp in empleadosEncontrados)
                         {
-                            Console.WriteLine($"{emp.ID} | {emp.Nombre} | {emp.Edad} | ${emp.Salario:F2}");
+                            Console.WriteLine(
+                                $"{emp.ID} | {emp.Nombre} | {emp.Edad} | ${emp.Salario:F2}");
                         }
 
                         break;
@@ -209,7 +209,7 @@ while (!salir)
                 break;
             }
 
-        // Case 2 Productos
+        // Productos
         case "2":
             {
                 Console.Clear();
@@ -223,7 +223,8 @@ while (!salir)
                 producto.Precio = 0;
                 producto.ID = 0;
 
-                List<Producto> listaproductos = repoproductos.Lista();
+                List<Producto> listaproductos =
+                    repoproductos.Lista().Data ?? new List<Producto>();
 
                 Console.WriteLine("\n¿Qué movimiento desea realizar?");
                 Console.WriteLine("R. Registrar");
@@ -274,30 +275,29 @@ while (!salir)
 
                         Console.WriteLine("\n===== ELIMINAR PRODUCTO =====");
                         Console.WriteLine();
-
                         Console.WriteLine("ID   |   Nombre   |   Precio");
                         Console.WriteLine("--------------------------------");
 
                         foreach (Producto prod in listaproductos)
                         {
-                            Console.WriteLine($"{prod.ID} | {prod.Nombre} | ${prod.Precio:F2}");
+                            Console.WriteLine(
+                                $"{prod.ID} | {prod.Nombre} | ${prod.Precio:F2}");
                         }
 
                         Console.WriteLine();
-
                         Console.Write("Ingrese el ID del producto a eliminar: ");
+
                         producto.ID = Convert.ToInt32(Console.ReadLine());
 
                         repoproductos.Eliminar(producto);
 
                         break;
 
-                    // Ver lista de productos
+                    // Ver productos
                     case "V":
 
                         Console.WriteLine("\n===== LISTA DE PRODUCTOS =====");
                         Console.WriteLine();
-
                         Console.WriteLine("ID   |   Nombre   |   Precio");
                         Console.WriteLine("--------------------------------");
 
@@ -305,7 +305,8 @@ while (!salir)
                         {
                             Producto prod = listaproductos[i];
 
-                            Console.WriteLine($"{prod.ID} | {prod.Nombre} | ${prod.Precio:F2}");
+                            Console.WriteLine(
+                                $"{prod.ID} | {prod.Nombre} | ${prod.Precio:F2}");
                         }
 
                         break;
@@ -314,21 +315,22 @@ while (!salir)
                     case "B":
 
                         Console.WriteLine("\n===== BUSCAR PRODUCTO =====");
-
                         Console.Write("Ingrese el nombre del producto a buscar: ");
 
                         string nombreProducto = Console.ReadLine();
 
-                        List<Producto> productosEncontrados = repoproductos.Buscar(nombreProducto);
+                        List<Producto> productosEncontrados =
+                            repoproductos.Buscar(nombreProducto).Data
+                            ?? new List<Producto>();
 
                         Console.WriteLine();
-
                         Console.WriteLine("ID   |   Nombre   |   Precio");
                         Console.WriteLine("--------------------------------");
 
                         foreach (Producto prod in productosEncontrados)
                         {
-                            Console.WriteLine($"{prod.ID} | {prod.Nombre} | ${prod.Precio:F2}");
+                            Console.WriteLine(
+                                $"{prod.ID} | {prod.Nombre} | ${prod.Precio:F2}");
                         }
 
                         break;
@@ -343,13 +345,12 @@ while (!salir)
                 break;
             }
 
-        // Case 3 Tienda
+        // Tienda
         case "3":
             {
                 Console.Clear();
 
                 Console.WriteLine("\n===== TIENDA =====");
-
                 Console.WriteLine("V. Vender");
                 Console.WriteLine("H. Historial");
 
@@ -362,14 +363,30 @@ while (!salir)
                     // Vender productos
                     case "V":
                         {
-                            RepositorioProductos repoproductos = new RepositorioProductos();
+                            RepositorioProductos repoproductos =
+                                new RepositorioProductos();
 
-                            RepositorioVentas repositorioVentas = new RepositorioVentas();
+                            RepositorioVentas repositorioVentas =
+                                new RepositorioVentas();
 
-                            int numeroVenta = repositorioVentas.ObtenerNumeroVentaDelDia();
+                            Response<string> respuestaCodigoVenta =
+                                repositorioVentas.ObtenerNumeroVentaDelDia();
 
-                            string codigoVenta = DateTime.Now.ToString("yyyyMMdd") + numeroVenta.ToString("D3");
+                            if (respuestaCodigoVenta.Codigo != 1 ||
+                                string.IsNullOrWhiteSpace(respuestaCodigoVenta.Data))
+                            {
+                                Console.WriteLine(
+                                    $"\n{respuestaCodigoVenta.Mensaje}");
 
+                                Console.WriteLine(
+                                    "\nPresiona ENTER para continuar...");
+
+                                Console.ReadLine();
+
+                                break;
+                            }
+
+                            string codigoVenta = respuestaCodigoVenta.Data;
                             string p = "P";
 
                             Venta venta = new Venta(Usuario, codigoVenta);
@@ -382,19 +399,24 @@ while (!salir)
                                 Console.WriteLine();
 
                                 Console.Write("Ingrese código de producto: ");
-                                int codigoProducto = Convert.ToInt32(Console.ReadLine());
+                                int codigoProducto =
+                                    Convert.ToInt32(Console.ReadLine());
 
                                 Console.Write("Ingrese cantidad: ");
-                                int cantidad = Convert.ToInt32(Console.ReadLine());
+                                int cantidad =
+                                    Convert.ToInt32(Console.ReadLine());
 
                                 // Buscar producto
-                                Producto infoProduct = repoproductos.Buscar(codigoProducto);
+                                Producto infoProduct =
+                                    repoproductos.Buscar(codigoProducto).Data;
 
                                 if (infoProduct == null)
                                 {
                                     Console.WriteLine("\nProducto no encontrado.");
 
-                                    Console.WriteLine("\nPresiona ENTER para continuar...");
+                                    Console.WriteLine(
+                                        "\nPresiona ENTER para continuar...");
+
                                     Console.ReadLine();
 
                                     continue;
@@ -408,7 +430,8 @@ while (!salir)
                                 Console.WriteLine($"Producto: {infoProduct.Nombre}");
                                 Console.WriteLine($"Precio: ${infoProduct.Precio:F2}");
                                 Console.WriteLine($"Cantidad: {cantidad}");
-                                Console.WriteLine($"Importe: ${(infoProduct.Precio * cantidad):F2}");
+                                Console.WriteLine(
+                                    $"Importe: ${(infoProduct.Precio * cantidad):F2}");
 
                                 Console.WriteLine();
                                 Console.WriteLine("P. Agregar otro producto");
@@ -419,6 +442,7 @@ while (!salir)
                                 p = Console.ReadLine().ToUpper();
                             }
 
+                            // Registrar venta
                             repositorioVentas.Registrar(venta);
 
                             Console.Clear();
@@ -452,9 +476,7 @@ while (!salir)
                             }
 
                             Console.WriteLine("------------------------------------------");
-
                             Console.WriteLine($"TOTAL: ${venta.Total:F2}");
-
                             Console.WriteLine("==========================================");
                             Console.WriteLine("        ¡GRACIAS POR SU COMPRA!");
                             Console.WriteLine("==========================================");
@@ -471,9 +493,11 @@ while (!salir)
                             Console.WriteLine("           HISTORIAL DE VENTAS");
                             Console.WriteLine("==========================================");
 
-                            RepositorioVentas repositorioVentas = new RepositorioVentas();
+                            RepositorioVentas repositorioVentas =
+                                new RepositorioVentas();
 
-                            List<Venta> ventas = repositorioVentas.Lista();
+                            List<Venta> ventas =
+                                repositorioVentas.Lista().Data ?? new List<Venta>();
 
                             if (ventas.Count == 0)
                             {
@@ -498,7 +522,9 @@ while (!salir)
                                 }
                             }
 
-                            Console.WriteLine("\nPresiona ENTER para continuar...");
+                            Console.WriteLine(
+                                "\nPresiona ENTER para continuar...");
+
                             Console.ReadLine();
 
                             break;
@@ -525,6 +551,3 @@ while (!salir)
     Console.WriteLine("Presiona ENTER para regresar al menú...");
     Console.ReadLine();
 }
-
-
-
